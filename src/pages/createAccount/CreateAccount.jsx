@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import AuthContent from "../shared/AuthContent"
 
-const loginSchema = z.object({
+const createAccountSchema = z.object({
   emailOrPhone: z
     .string()
     .refine((value) => {
@@ -20,9 +20,9 @@ const loginSchema = z.object({
     })
 })
 
-const Login = () => {
+const CreateAccount = () => {
   const form = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(createAccountSchema),
     defaultValues: {
       emailOrPhone: "",
       pin: ""
@@ -34,8 +34,8 @@ const Login = () => {
   }
 
   return (
-    <AuthContent formType={'login'} form={form} onSubmit={onSubmit} />
+    <AuthContent formType={'createAccount'} form={form} onSubmit={onSubmit} />
   );
 };
 
-export default Login;
+export default CreateAccount;
