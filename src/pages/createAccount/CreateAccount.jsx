@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import AuthContent from "../shared/AuthContent"
 import useAxiosPublic from "@/hooks/useAxiosPublic"
+import Swal from "sweetalert2"
 
 // update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
 const createAccountSchema = z.object({
@@ -52,12 +53,19 @@ const CreateAccount = () => {
   const onSubmit = (values) => {
     axiosPublic.post('/users', values)
       .then(res => {
-        console.log(res.data);
+        form.reset();
+        if (res.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "Your request is under review.",
+            text: "You will able to login your account after admin approval.",
+            confirmButtonColor: "#16A34A",
+          });
+        }
       })
       .catch(err => {
         console.error(err)
       })
-    console.log(values)
   }
 
   return (
