@@ -18,19 +18,38 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
 const loginSchema = z.object({
-  emailOrPhone: z.string().min(2).max(50),
-  pin: z.string().min(2).max(50),
+  emailOrPhone: z
+    .string()
+    .refine((value) => {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const phoneRegex = /(^(\+88|0088)?(01){1}[123456789]{1}(\d){8})$/;
+      return emailRegex.test(value) || phoneRegex.test(value);
+    }, {
+      message: "Must be a valid email or phone number",
+    }),
+  pin: z
+    .string()
+    .regex(/^\d{5}$/, {
+      message: "PIN must be exactly 5 digits",
+    })
 })
 
 const Login = () => {
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      emailOrPhone: "",
+      pin: ""
     },
   })
+
+  const handlePinKeyPress = (event) => {
+    const charCode = event.charCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  };
 
   function onSubmit(values) {
     console.log(values)
@@ -66,7 +85,13 @@ const Login = () => {
                     <FormItem>
                       <FormLabel>Pin</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter your pin" {...field} type="number" />
+                        <Input placeholder="Enter your pin"
+                          {...field}
+                          inputMode="numeric"
+                          pattern="\d*"
+                          maxLength="5"
+                          onKeyPress={handlePinKeyPress}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
