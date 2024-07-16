@@ -42,7 +42,7 @@ const CreateAccount = () => {
     },
   })
 
-  function onSubmit(values) {
+  const onSubmit = (values) => {
     console.log(values)
   }
 
