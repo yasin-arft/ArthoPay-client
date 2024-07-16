@@ -8,7 +8,8 @@ const loginSchema = z.object({
     .string()
     .refine((value) => {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const phoneRegex = /(^(\+88|0088)?(01){1}[123456789]{1}(\d){8})$/;
+      // update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
+      const phoneRegex = /(^(\+88|0088)?(01){1}[0123456789]{1}(\d){8})$/;
       return emailRegex.test(value) || phoneRegex.test(value);
     }, {
       message: "Must be a valid email or phone number",
