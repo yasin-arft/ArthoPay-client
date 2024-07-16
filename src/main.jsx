@@ -1,13 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { Button } from './components/ui/button'
+import { RouterProvider } from 'react-router-dom'
+import Router from './routes/Router'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-     <h1 className="text-3xl font-bold underline">
-      Hello world!
-      <Button>Click me</Button>
-    </h1>
+    <RouterProvider router={Router} />
   </React.StrictMode>,
 )
