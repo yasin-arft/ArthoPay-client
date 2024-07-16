@@ -2,7 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import AuthContent from "../shared/AuthContent"
+import useAxiosPublic from "@/hooks/useAxiosPublic"
 
+// update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
 const createAccountSchema = z.object({
   name: z
     .string()
@@ -18,7 +20,6 @@ const createAccountSchema = z.object({
   phone: z
     .string()
     .refine((value) => {
-      // update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
       const phoneRegex = /(^(\+88|0088)?(01){1}[0123456789]{1}(\d){8})$/;
       return phoneRegex.test(value);
     }, {
@@ -28,21 +29,34 @@ const createAccountSchema = z.object({
     .string()
     .regex(/^\d{5}$/, {
       message: "PIN must be exactly 5 digits",
-    })
+    }),
+  role: z
+    .string()
+    .min(1, { message: "Select a role" }),
 })
 
 const CreateAccount = () => {
+  const axiosPublic = useAxiosPublic();
+
   const form = useForm({
     resolver: zodResolver(createAccountSchema),
     defaultValues: {
       name: "",
       email: "",
       phone: "",
-      pin: ""
+      pin: "",
+      role: ""
     },
   })
 
   const onSubmit = (values) => {
+    axiosPublic.post('/users', values)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.error(err)
+      })
     console.log(values)
   }
 

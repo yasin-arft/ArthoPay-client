@@ -16,6 +16,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Link } from "react-router-dom"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 const AuthContent = ({ formType, form, onSubmit }) => {
 
@@ -41,7 +43,7 @@ const AuthContent = ({ formType, form, onSubmit }) => {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
                 {
                   formType === 'login' && <FormField
                     control={form.control}
@@ -121,6 +123,37 @@ const AuthContent = ({ formType, form, onSubmit }) => {
                     </FormItem>
                   )}
                 />
+                {
+                  formType === 'createAccount' && (
+                    <FormField
+                      className="mb-4"
+                      control={form.control}
+                      name="role"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Register as</FormLabel>
+                          <FormControl>
+                            <RadioGroup 
+                            className="flex"
+                            onValueChange={field.onChange} 
+                            defaultValue={field.value}
+                            >
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="user" id="user" />
+                                <Label htmlFor="user">User</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="agent" id="agent" />
+                                <Label htmlFor="agent">Agent</Label>
+                              </div>
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )
+                }
                 <Button type="submit" className='w-full'>
                   {
                     formType === 'login' ? 'Login' : 'Create Account'

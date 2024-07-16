@@ -3,12 +3,12 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import AuthContent from "../shared/AuthContent"
 
+// update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
 const loginSchema = z.object({
   emailOrPhone: z
     .string()
     .refine((value) => {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      // update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
       const phoneRegex = /(^(\+88|0088)?(01){1}[0123456789]{1}(\d){8})$/;
       return emailRegex.test(value) || phoneRegex.test(value);
     }, {

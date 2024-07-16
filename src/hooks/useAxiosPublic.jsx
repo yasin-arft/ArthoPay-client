@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const axiosSecure = axios.create({
+const axiosPublic = axios.create({
   baseURL: import.meta.env.VITE_Server_baseURL
 })
 
 const useAxiosPublic = () => {
   
-  return axiosSecure;
+  return axiosPublic;
 };
 
 export default useAxiosPublic;
