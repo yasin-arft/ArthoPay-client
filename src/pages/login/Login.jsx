@@ -3,6 +3,10 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import AuthContent from "../shared/AuthContent"
 import useAxiosPublic from "@/hooks/useAxiosPublic"
+import { setUserToSS } from "@/utils/sessionStorage"
+import Swal from "sweetalert2"
+import { useContext } from "react"
+import { UserContext } from "@/providers/UserProvider"
 
 // update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
 const loginSchema = z.object({
@@ -23,6 +27,7 @@ const loginSchema = z.object({
 })
 
 const Login = () => {
+  const { setUserExist } = useContext(UserContext);
   const axiosPublic = useAxiosPublic();
 
   const form = useForm({
@@ -37,7 +42,14 @@ const Login = () => {
     axiosPublic.post('/login', values)
       .then(res => {
         form.reset();
-        console.log(res.data);
+        setUserToSS(res.data);
+        setUserExist(true);
+        Swal.fire({
+          icon: "success",
+          title: 'Success fully logged in.',
+          showConfirmButton: false,
+          timer: 1500
+        });
       })
       .catch(err => {
         console.error(err);
