@@ -8,9 +8,9 @@ const Home = () => {
 
   if (user) {
     return <Dashboard />
+  } else {
+    return <Login />
   }
-  
-  return <Login />;
 };
 
 export default Home;

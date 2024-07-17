@@ -45,7 +45,7 @@ const Login = () => {
         setUserExist(true);
         Swal.fire({
           icon: "success",
-          title: 'Success fully logged in.',
+          title: 'Successfully logged in.',
           showConfirmButton: false,
           timer: 1500
         });
