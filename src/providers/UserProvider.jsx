@@ -12,7 +12,7 @@ const UserProvider = ({ children }) => {
     const user = getUserFromSS();
 
     setUser(user);
-  }, [userExist])
+  }, [userExist]);
 
   return (
     <UserContext.Provider value={{ user, setUser, setUserExist }}>

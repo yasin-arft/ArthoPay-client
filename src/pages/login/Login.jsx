@@ -5,8 +5,7 @@ import AuthContent from "../shared/AuthContent"
 import useAxiosPublic from "@/hooks/useAxiosPublic"
 import { setUserToSS } from "@/utils/sessionStorage"
 import Swal from "sweetalert2"
-import { useContext } from "react"
-import { UserContext } from "@/providers/UserProvider"
+import useUser from "@/hooks/useUser"
 
 // update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
 const loginSchema = z.object({
@@ -27,7 +26,7 @@ const loginSchema = z.object({
 })
 
 const Login = () => {
-  const { setUserExist } = useContext(UserContext);
+  const {user, setUserExist } = useUser();
   const axiosPublic = useAxiosPublic();
 
   const form = useForm({
