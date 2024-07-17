@@ -26,7 +26,7 @@ const loginSchema = z.object({
 })
 
 const Login = () => {
-  const {user, setUserExist } = useUser();
+  const { setUserExist } = useUser();
   const axiosPublic = useAxiosPublic();
 
   const form = useForm({

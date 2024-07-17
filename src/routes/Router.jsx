@@ -1,11 +1,11 @@
 import CreateAccount from "@/pages/createAccount/CreateAccount";
-import Login from "@/pages/login/Login";
+import Home from "@/pages/home/Home";
 import { createBrowserRouter } from "react-router-dom";
 
 const Router = createBrowserRouter([
   {
     path: '/',
-    element: <Login />
+    element: <Home />
   },
   {
     path: '/create-account',
