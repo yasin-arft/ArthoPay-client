@@ -46,7 +46,7 @@ const CreateAccount = () => {
       email: "",
       phone: "",
       pin: "",
-      role: ""
+      role: "user"
     },
   })
 

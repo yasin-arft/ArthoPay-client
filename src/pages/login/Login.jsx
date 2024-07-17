@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import AuthContent from "../shared/AuthContent"
+import useAxiosPublic from "@/hooks/useAxiosPublic"
 
 // update phone regex /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
 const loginSchema = z.object({
@@ -22,6 +23,8 @@ const loginSchema = z.object({
 })
 
 const Login = () => {
+  const axiosPublic = useAxiosPublic();
+
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -30,8 +33,15 @@ const Login = () => {
     },
   })
 
-  function onSubmit(values) {
-    console.log(values)
+  const onSubmit = (values) => {
+    axiosPublic.post('/login', values)
+      .then(res => {
+        form.reset();
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.error(err);
+      })
   }
 
   return (
